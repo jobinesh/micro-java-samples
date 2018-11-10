@@ -30,7 +30,7 @@ mvn package
 ## Start the application
 
 ```
-java -jar target//hr-service-mp.jar
+java -jar target/hr-service-mp.jar
 ```
 
 ## Exercise the application
