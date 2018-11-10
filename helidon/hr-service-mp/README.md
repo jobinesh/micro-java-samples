@@ -1,5 +1,5 @@
 
-# Helidon Example: quickstart-mp
+# Helidon Example: hr-service-mp
 
 This example implements a simple Hello World REST service using MicroProfile
 
@@ -30,35 +30,26 @@ mvn package
 ## Start the application
 
 ```
-java -jar target/quickstart-mp.jar
+java -jar target//hr-service-mp.jar
 ```
 
 ## Exercise the application
 
 ```
-curl -X GET http://localhost:8080/greet
-{"message":"Hello World!"}
+curl -X GET http://localhost:8080/departments
 
-curl -X GET http://localhost:8080/greet/Joe
-{"message":"Hello Joe!"}
-
-curl -X PUT http://localhost:8080/greet/greeting/Hola
-{"gretting":"Hola"}
-
-curl -X GET http://localhost:8080/greet/Jose
-{"message":"Hola Jose!"}
 ```
 
 ## Build the Docker Image
 
 ```
-docker build -t quickstart-mp target
+docker build -t hr-service-mp target
 ```
 
 ## Start the application with Docker
 
 ```
-docker run --rm -p 8080:8080 quickstart-mp:latest
+docker run --rm -p 8080:8080 hr-service-mp:latest
 ```
 
 Exercise the application as described above
@@ -69,5 +60,5 @@ Exercise the application as described above
 kubectl cluster-info                         # Verify which cluster
 kubectl get pods                             # Verify connectivity to cluster
 kubectl create -f target/app.yaml               # Deploy application
-kubectl get service quickstart-mp  # Verify deployed service
+kubectl get service hr-service-mp  # Verify deployed service
 ```
