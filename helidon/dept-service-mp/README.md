@@ -36,6 +36,10 @@ java -jar target/dept-service-mp.jar
 ## Exercise the application
 
 ```
+curl -X POST -H "Content-Type: application/json" \
+--data '{"departmentId":30,"departmentName":"Finance","locationId":1700,"managerId":200}' \
+http://localhost:8080/departments
+
 curl -X GET http://localhost:8080/departments
 
 ```
