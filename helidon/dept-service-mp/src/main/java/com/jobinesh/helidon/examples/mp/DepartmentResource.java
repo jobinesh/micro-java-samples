@@ -5,8 +5,6 @@
  */
 package com.jobinesh.helidon.examples.mp;
 
-
-
 import com.jobinesh.helidon.examples.mp.model.Departments;
 import com.jobinesh.helidon.examples.mp.model.PersistenceManager;
 import javax.enterprise.context.RequestScoped;
@@ -71,7 +69,9 @@ public class DepartmentResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public void createDepartment(Departments entity) {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+        em.getTransaction().begin();
         em.persist(entity);
+        commitTxn(em);
     }
 
     /**
@@ -231,49 +231,10 @@ public class DepartmentResource {
         return departments;
     }
 
-    private JsonObject createResponse() {
-        //query();
-        try {
-            EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-            javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Departments.class));
-            List<Departments> departments = em.createQuery(cq).getResultList();
-            System.out.println("departments:" + departments);
-        } catch (Throwable th) {
-            th.printStackTrace();
-        }
-        return Json.createObjectBuilder()
-                .add("message", "Helloooo")
-                .build();
-    }
-
     private void commitTxn(EntityManager em) {
         em.getTransaction().commit();
         em.close();
 
     }
 
-    public void query() {
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            Connection connection = this.dataSource.getConnection();
-            //DriverManager.getConnection("jdbc:sqlite:/Users/jmpurush/mywork/sqlite/demo.db");
-            String sql = "SELECT department_id, department_name, manager_id, location_id "
-                    + "FROM departments";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getInt("department_id") + "\t"
-                        + rs.getString("department_name") + "\t"
-                        + rs.getInt("manager_id") + "\t"
-                        + rs.getInt("location_id") + "\t"
-                );
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 }
