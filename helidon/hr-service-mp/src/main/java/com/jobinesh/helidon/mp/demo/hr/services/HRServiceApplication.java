@@ -15,6 +15,10 @@
  */
 package com.jobinesh.helidon.mp.demo.hr.services;
 
+import com.jobinesh.helidon.mp.demo.filter.ContainerRequestLoggerFilter;
+import com.jobinesh.helidon.mp.demo.filter.ContainerResponseCORSFilter;
+import com.jobinesh.helidon.mp.demo.interceptor.CSVMessageBodyReader;
+import com.jobinesh.helidon.mp.demo.interceptor.CSVMessageBodyWriter;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -32,6 +36,6 @@ public class HRServiceApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return CollectionsHelper.setOf( DepartmentResource.class);
+        return CollectionsHelper.setOf(DepartmentResource.class, ContainerRequestLoggerFilter.class, ContainerResponseCORSFilter.class, CSVMessageBodyReader.class, CSVMessageBodyWriter.class);
     }
 }

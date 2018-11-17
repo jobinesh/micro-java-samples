@@ -45,6 +45,49 @@ public class DepartmentResource {
     private final DataSource dataSource = null;
     private static final Logger logger = Logger.getLogger(DepartmentResource.class.getName());
 
+    @GET
+    @Path("batch")
+    @Produces("application/csv")
+
+    public List<Departments> findAllDepartmnetsInBatch() {
+        EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+        javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Departments.class));
+        List<Departments> departments = em.createQuery(cq).getResultList();
+        System.out.println("departments:" + departments);
+        return departments;
+    }
+
+    @POST
+    @Path("batch")
+    @Consumes("application/csv")
+    public void createInBatch(List<Departments> entities) {
+
+        logger.log(Level.INFO, entities.toString());
+        EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+        em.getTransaction().begin();
+
+        for (Departments entity : entities) {
+            em.persist(entity);
+        }
+
+        commitTxn(em);
+    }
+
+    @PUT
+    @Path("batch")
+    @Consumes("application/csv")
+    public void updateInBatch(List<Departments> entities) {
+
+        logger.log(Level.INFO, entities.toString());
+        EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+        em.getTransaction().begin();
+
+        for (Departments entity : entities) {
+            em.merge(entity);
+        }
+        commitTxn(em);
+    }
 
     /* public DepartmentResource(@Named("example") final DataSource dataSource) {
         super();
@@ -70,7 +113,9 @@ public class DepartmentResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public void createDepartment(Departments entity) {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
+        em.getTransaction().begin();
         em.persist(entity);
+        commitTxn(em);
     }
 
     /**

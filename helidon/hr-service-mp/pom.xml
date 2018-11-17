@@ -148,7 +148,6 @@
 
     <dependencyManagement>
         <dependencies>
-           
             <dependency>
                 <groupId>io.helidon</groupId>
                 <artifactId>helidon-bom</artifactId>
@@ -190,6 +189,15 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/net.sf.supercsv/super-csv -->
+        <!--Begin : Added for CSV Payload -->           
+        <dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <!-- End : Added for CSV Payload-->
+       
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>

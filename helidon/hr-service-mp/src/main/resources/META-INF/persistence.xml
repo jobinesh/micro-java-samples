@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="demo-pu" transaction-type="RESOURCE_LOCAL">
+    <!--   <persistence-unit name="demo-pu" transaction-type="RESOURCE_LOCAL">
         <class>com.jobinesh.helidon.mp.demo.hr.entity.Departments</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:/Users/jmpurush/mywork/sqlite/demo.db"/>
-            <!-- 
-          <property name="javax.persistence.jdbc.user" value="test" />
-          <property name="javax.persistence.jdbc.password" value="test" />
-          EclipseLink should create the database schema automatically 
-          <property name="eclipselink.ddl-generation" value="create-tables" />
-          <property name="eclipselink.ddl-generation.output-mode" value="database" />
-            -->
-            
+          
+              
             <property name="eclipselink.logging.parameters" value="true"/>
             <property name="eclipselink.weaving" value="static" />
             <property name="eclipselink.logging.level.sql" value="FINEST" />
             <property name="eclipselink.logging.level" value="FINEST" />
             <property name="eclipselink.logging.level.cache" value="FINEST" />
         </properties>
+    </persistence-unit>  
+   See PersistenceManager.java
+    -->
+     <persistence-unit name="demo-pu">
+          <class>com.jobinesh.helidon.mp.demo.hr.entity.Departments</class>
+        <jta-data-source>java:app/jdbc/demo</jta-data-source>
     </persistence-unit>
 </persistence>
