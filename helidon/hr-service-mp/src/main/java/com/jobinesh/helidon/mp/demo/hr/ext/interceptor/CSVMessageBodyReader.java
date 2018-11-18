@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobinesh.helidon.mp.demo.interceptor;
+package com.jobinesh.helidon.mp.demo.hr.ext.interceptor;
 
-import com.jobinesh.helidon.mp.demo.hr.entity.Departments;
+import com.jobinesh.helidon.mp.demo.hr.entity.Department;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -44,7 +44,7 @@ import org.supercsv.cellprocessor.constraint.NotNull;
  */
 @Provider
 @Consumes("application/csv")
-public class CSVMessageBodyReader implements MessageBodyReader<List<Departments>> {
+public class CSVMessageBodyReader implements MessageBodyReader<List<Department>> {
 
     private static final Logger logger = Logger.getLogger(CSVMessageBodyReader.class.getName());
 
@@ -87,7 +87,7 @@ public class CSVMessageBodyReader implements MessageBodyReader<List<Departments>
      * @throws WebApplicationException
      */
     @Override
-    public List readFrom(Class<List<Departments>> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException, WebApplicationException {
+    public List readFrom(Class<List<Department>> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, String> httpHeaders, InputStream entityStream) throws IOException, WebApplicationException {
 
         ArrayList list = new ArrayList();
         final CellProcessor[] processors = new CellProcessor[]{
@@ -99,7 +99,7 @@ public class CSVMessageBodyReader implements MessageBodyReader<List<Departments>
         ICsvBeanReader beanReader = new CsvBeanReader(new InputStreamReader(entityStream), CsvPreference.STANDARD_PREFERENCE);
         String[] header = beanReader.getHeader(false);
         Object obj = null;
-        while ((obj = beanReader.read(Departments.class, header, processors)) != null) {
+        while ((obj = beanReader.read(Department.class, header, processors)) != null) {
             list.add(obj);
             logger.log(Level.INFO, obj.toString());
         }

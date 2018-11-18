@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jobinesh.helidon.mp.demo.hr.services;
+package com.jobinesh.helidon.mp.demo.hr.main;
 
-import com.jobinesh.helidon.mp.demo.filter.ContainerRequestLoggerFilter;
-import com.jobinesh.helidon.mp.demo.filter.ContainerResponseCORSFilter;
-import com.jobinesh.helidon.mp.demo.interceptor.CSVMessageBodyReader;
-import com.jobinesh.helidon.mp.demo.interceptor.CSVMessageBodyWriter;
+import com.jobinesh.helidon.mp.demo.hr.ext.dynamic.DynamicFeatureRegister;
+import com.jobinesh.helidon.mp.demo.hr.ext.filter.ContainerRequestLoggerFilter;
+import com.jobinesh.helidon.mp.demo.hr.ext.filter.ContainerResponseCORSFilter;
+import com.jobinesh.helidon.mp.demo.hr.services.DepartmentResource;
+import com.jobinesh.helidon.mp.demo.hr.ext.validation.DepartmentNotFoundExceptionMapper;
+import com.jobinesh.helidon.mp.demo.hr.ext.interceptor.CSVMessageBodyReader;
+import com.jobinesh.helidon.mp.demo.hr.ext.interceptor.CSVMessageBodyWriter;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -36,6 +39,13 @@ public class HRServiceApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return CollectionsHelper.setOf(DepartmentResource.class, ContainerRequestLoggerFilter.class, ContainerResponseCORSFilter.class, CSVMessageBodyReader.class, CSVMessageBodyWriter.class);
+        return CollectionsHelper.setOf(
+                DepartmentResource.class,
+                ContainerResponseCORSFilter.class,
+                DynamicFeatureRegister.class,
+                CSVMessageBodyReader.class,
+                CSVMessageBodyWriter.class,
+                DepartmentNotFoundExceptionMapper.class
+        );
     }
 }

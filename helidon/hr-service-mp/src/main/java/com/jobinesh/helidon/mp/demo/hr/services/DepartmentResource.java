@@ -5,8 +5,9 @@
  */
 package com.jobinesh.helidon.mp.demo.hr.services;
 
-import com.jobinesh.helidon.mp.demo.hr.entity.Departments;
+import com.jobinesh.helidon.mp.demo.hr.entity.Department;
 import com.jobinesh.helidon.mp.demo.hr.entity.PersistenceManager;
+import com.jobinesh.helidon.mp.demo.hr.ext.validation.DeprtmentNotFoundBusinessException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.json.Json;
@@ -49,11 +50,11 @@ public class DepartmentResource {
     @Path("batch")
     @Produces("application/csv")
 
-    public List<Departments> findAllDepartmnetsInBatch() {
+    public List<Department> findAllDepartmnetsInBatch() {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(Departments.class));
-        List<Departments> departments = em.createQuery(cq).getResultList();
+        cq.select(cq.from(Department.class));
+        List<Department> departments = em.createQuery(cq).getResultList();
         System.out.println("departments:" + departments);
         return departments;
     }
@@ -61,13 +62,13 @@ public class DepartmentResource {
     @POST
     @Path("batch")
     @Consumes("application/csv")
-    public void createInBatch(List<Departments> entities) {
+    public void createInBatch(List<Department> entities) {
 
         logger.log(Level.INFO, entities.toString());
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         em.getTransaction().begin();
 
-        for (Departments entity : entities) {
+        for (Department entity : entities) {
             em.persist(entity);
         }
 
@@ -77,13 +78,13 @@ public class DepartmentResource {
     @PUT
     @Path("batch")
     @Consumes("application/csv")
-    public void updateInBatch(List<Departments> entities) {
+    public void updateInBatch(List<Department> entities) {
 
         logger.log(Level.INFO, entities.toString());
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         em.getTransaction().begin();
 
-        for (Departments entity : entities) {
+        for (Department entity : entities) {
             em.merge(entity);
         }
         commitTxn(em);
@@ -95,23 +96,23 @@ public class DepartmentResource {
     }*/
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Departments> getAllDepartments() {
+    public List<Department> getAllDepartments() {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(Departments.class));
-        List<Departments> departments = em.createQuery(cq).getResultList();
+        cq.select(cq.from(Department.class));
+        List<Department> departments = em.createQuery(cq).getResultList();
         System.out.println("departments:" + departments);
         return departments;
     }
 
     /**
-     * Creates Departments entity
+     * Creates Department entity
      *
      * @param entity
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createDepartment(Departments entity) {
+    public void createDepartment(Department entity) {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         em.getTransaction().begin();
         em.persist(entity);
@@ -129,7 +130,7 @@ public class DepartmentResource {
     public int countREST() {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        javax.persistence.criteria.Root<Departments> rt = cq.from(Departments.class);
+        javax.persistence.criteria.Root<Department> rt = cq.from(Department.class);
         cq.select(em.getCriteriaBuilder().count(rt));
         javax.persistence.Query q = em.createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
@@ -148,7 +149,7 @@ public class DepartmentResource {
             @FormParam("departmentId") short departmentId,
             @FormParam("departmentName") String departmentName) {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-        Departments entity = new Departments();
+        Department entity = new Department();
         entity.setDepartmentId(departmentId);
         entity.setDepartmentName(departmentName);
         em.getTransaction().begin();
@@ -177,7 +178,7 @@ public class DepartmentResource {
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void editDepartment(@PathParam("id") Short id, Departments entity) {
+    public void editDepartment(@PathParam("id") Short id, Department entity) {
         logger.log(Level.INFO, "Departments: " + entity.toString());
 
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
@@ -193,16 +194,20 @@ public class DepartmentResource {
      */
     @DELETE
     @Path("{id}")
-    public void removeDepartment(@PathParam("id") Short id) {
+    public void removeDepartment(@PathParam("id") Short id) throws DeprtmentNotFoundBusinessException {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-        Departments entity = em.find(Departments.class, id);
+        Department entity = em.find(Department.class, id);
+        if (entity == null) {
+            throw new DeprtmentNotFoundBusinessException("Department is missing in store");
 
+        }
         em.getTransaction().begin();
         em.remove(em.merge(entity));
         commitTxn(em);
 
     }
 
+   
     /**
      * Finds a department by name
      *
@@ -212,11 +217,11 @@ public class DepartmentResource {
     @GET
     @Path("{name: [a-zA-Z][a-zA-Z_0-9]}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Departments findDepartmentByName(@PathParam("name") String name) {
+    public Department findDepartmentByName(@PathParam("name") String name) {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         Query queryDepartmentsByName = em.createNamedQuery("Departments.findByDepartmentName");
         queryDepartmentsByName.setParameter("departmentName", name);
-        Departments department = (Departments) queryDepartmentsByName.getSingleResult();
+        Department department = (Department) queryDepartmentsByName.getSingleResult();
         return department;
     }
 
@@ -229,9 +234,9 @@ public class DepartmentResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Departments findDepartment(@PathParam("id") Short id) {
+    public Department findDepartment(@PathParam("id") Short id) {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
-        return em.find(Departments.class, id);
+        return em.find(Department.class, id);
     }
 
     /**
@@ -243,13 +248,13 @@ public class DepartmentResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("query")
-    public List<Departments> findAllDepartmentsWithQueryParam(@QueryParam("name") String name) {
+    public List<Department> findAllDepartmentsWithQueryParam(@QueryParam("name") String name) {
         //Find all departments from the data store
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         logger.log(Level.INFO, "findAllDepartmentsWithQueryParam name:" + name);
         Query queryDepartmentsByName = em.createNamedQuery("Departments.findByDepartmentName");
         queryDepartmentsByName.setParameter("departmentName", name);
-        List<Departments> departments = queryDepartmentsByName.getResultList();
+        List<Department> departments = queryDepartmentsByName.getResultList();
         logger.log(Level.INFO, departments.toString());
         return departments;
     }
@@ -263,12 +268,12 @@ public class DepartmentResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("matrix")
-    public List<Departments> findAllDepartmentsWithMatrixParam(@MatrixParam("name") String name) {
+    public List<Department> findAllDepartmentsWithMatrixParam(@MatrixParam("name") String name) {
         //Find all departments from the data store
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         Query queryDepartmentsByName = em.createNamedQuery("Departments.findByDepartmentName");
         queryDepartmentsByName.setParameter("departmentName", "%" + name + "%");
-        List<Departments> departments = queryDepartmentsByName.getResultList();
+        List<Department> departments = queryDepartmentsByName.getResultList();
 
         logger.log(Level.INFO, departments.toString());
 
@@ -280,8 +285,8 @@ public class DepartmentResource {
         try {
             EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Departments.class));
-            List<Departments> departments = em.createQuery(cq).getResultList();
+            cq.select(cq.from(Department.class));
+            List<Department> departments = em.createQuery(cq).getResultList();
             System.out.println("departments:" + departments);
         } catch (Throwable th) {
             th.printStackTrace();

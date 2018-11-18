@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobinesh.helidon.mp.demo.interceptor;
+package com.jobinesh.helidon.mp.demo.hr.ext.interceptor;
 
-import com.jobinesh.helidon.mp.demo.hr.entity.Departments;
+import com.jobinesh.helidon.mp.demo.hr.entity.Department;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -41,7 +41,7 @@ import org.supercsv.prefs.CsvPreference;
  */
 @Provider
 @Produces("application/csv")
-public class CSVMessageBodyWriter implements MessageBodyWriter<List<Departments>> {
+public class CSVMessageBodyWriter implements MessageBodyWriter<List<Department>> {
 
     private static final Logger logger = Logger.getLogger(CSVMessageBodyWriter.class.getName());
 
@@ -75,7 +75,7 @@ public class CSVMessageBodyWriter implements MessageBodyWriter<List<Departments>
      * @return
      */
     @Override
-    public long getSize(List<Departments> t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+    public long getSize(List<Department> t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
         // deprecated by JAX-RS 2.0 and ignored by Jersey runtime
         return 0;
     }
@@ -96,7 +96,7 @@ public class CSVMessageBodyWriter implements MessageBodyWriter<List<Departments>
      * @throws WebApplicationException
      */
     @Override
-    public void writeTo(List<Departments> dataList, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) throws IOException, WebApplicationException {
+    public void writeTo(List<Department> dataList, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType, MultivaluedMap<String, Object> httpHeaders, OutputStream entityStream) throws IOException, WebApplicationException {
         //CsvBeanWriter is an open source, which writes a CSV file by
         // mapping each field on the bean to a column in the CSV file 
         //(using the supplied name mapping).
