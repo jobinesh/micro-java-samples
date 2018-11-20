@@ -7,8 +7,10 @@ package com.jobinesh.hr.service.mp.client;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
 
 /**
  * JAX-RS REST client generated for REST resource:HRService [hr]<br>
@@ -26,11 +28,11 @@ public class HRServiceJAXRSClient {
 
     public void createDepartment() throws ClientErrorException {
         Client client = javax.ws.rs.client.ClientBuilder.newClient();
-        WebTarget webTarget = client.target(BASE_URI).path("hr");
+        WebTarget webTarget = client.target(BASE_URI);
         Form form = new Form();
         form.param("departmentId", "40");
         form.param("departmentName", "Revenue");
-        webTarget.path("departments").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(form, javax.ws.rs.core.MediaType.APPLICATION_JSON));
+        webTarget.path("departments").path("form").request(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(Entity.form(form));
         client.close();
     }
 

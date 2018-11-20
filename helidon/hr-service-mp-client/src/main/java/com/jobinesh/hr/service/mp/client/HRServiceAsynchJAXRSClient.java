@@ -5,8 +5,6 @@
  */
 package com.jobinesh.hr.service.mp.client;
 
-
-
 import java.util.List;
 import java.util.concurrent.Future;
 import javax.ws.rs.client.AsyncInvoker;
@@ -17,7 +15,8 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 /**
- * JAX-RS Asynchronous REST client generated for REST resource:HRService [hr]<br>
+ * JAX-RS Asynchronous REST client generated for REST resource:HRService
+ * [hr]<br>
  *
  *
  * @author Jobinesh
@@ -61,7 +60,7 @@ public class HRServiceAsynchJAXRSClient {
     public void findAllDepartmnetsInAsynchWithCallback() throws Exception {
 
         final Client client = javax.ws.rs.client.ClientBuilder.newClient();
-        WebTarget webTarget = client.target(BASE_URI).path("hr").path("departments");
+        WebTarget webTarget = client.target(BASE_URI).path("departments");
         AsyncInvoker asyncInvoker = webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).async();
 
         System.out.println("Request is being processed asynchronously.");

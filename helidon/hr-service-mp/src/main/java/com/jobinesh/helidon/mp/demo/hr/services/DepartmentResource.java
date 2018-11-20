@@ -7,6 +7,7 @@ package com.jobinesh.helidon.mp.demo.hr.services;
 
 import com.jobinesh.helidon.mp.demo.hr.entity.Department;
 import com.jobinesh.helidon.mp.demo.hr.entity.PersistenceManager;
+import com.jobinesh.helidon.mp.demo.hr.ext.dynamic.RequestLogger;
 import com.jobinesh.helidon.mp.demo.hr.ext.validation.DeprtmentNotFoundBusinessException;
 
 import javax.enterprise.context.RequestScoped;
@@ -49,13 +50,13 @@ public class DepartmentResource {
     @GET
     @Path("batch")
     @Produces("application/csv")
-
+    @RequestLogger
     public List<Department> findAllDepartmnetsInBatch() {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Department.class));
         List<Department> departments = em.createQuery(cq).getResultList();
-        System.out.println("departments:" + departments);
+        logger.log(Level.INFO, "departments:" + departments);
         return departments;
     }
 
@@ -101,7 +102,7 @@ public class DepartmentResource {
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Department.class));
         List<Department> departments = em.createQuery(cq).getResultList();
-        System.out.println("departments:" + departments);
+        logger.log(Level.INFO, "departments:" + departments);
         return departments;
     }
 
@@ -145,6 +146,7 @@ public class DepartmentResource {
      */
     @POST
     @Path("form")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public void createDepartmnet(
             @FormParam("departmentId") short departmentId,
             @FormParam("departmentName") String departmentName) {
@@ -207,7 +209,6 @@ public class DepartmentResource {
 
     }
 
-   
     /**
      * Finds a department by name
      *
@@ -287,7 +288,7 @@ public class DepartmentResource {
             javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Department.class));
             List<Department> departments = em.createQuery(cq).getResultList();
-            System.out.println("departments:" + departments);
+            logger.log(Level.INFO, "departments:" + departments);
         } catch (Throwable th) {
             th.printStackTrace();
         }
@@ -302,27 +303,4 @@ public class DepartmentResource {
 
     }
 
-    public void query() {
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            Connection connection = this.dataSource.getConnection();
-            //DriverManager.getConnection("jdbc:sqlite:/Users/jmpurush/mywork/sqlite/demo.db");
-            String sql = "SELECT department_id, department_name, manager_id, location_id "
-                    + "FROM departments";
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getInt("department_id") + "\t"
-                        + rs.getString("department_name") + "\t"
-                        + rs.getInt("manager_id") + "\t"
-                        + rs.getInt("location_id") + "\t"
-                );
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 }

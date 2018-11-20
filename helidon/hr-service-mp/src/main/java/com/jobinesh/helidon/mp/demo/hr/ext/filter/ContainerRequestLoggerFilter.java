@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.ext.Provider;
 
 /**
  * This filter will be registered dynamically from DynamicFeatureRegister
@@ -24,6 +23,7 @@ public class ContainerRequestLoggerFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
+        
         logger.log(Level.INFO, "----Requested---" + requestContext.getUriInfo().toString());
     }
 
