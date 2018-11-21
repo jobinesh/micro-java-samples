@@ -9,6 +9,7 @@ import com.jobinesh.helidon.mp.demo.hr.entity.Department;
 import com.jobinesh.helidon.mp.demo.hr.entity.PersistenceManager;
 import com.jobinesh.helidon.mp.demo.hr.ext.dynamic.RequestLogger;
 import com.jobinesh.helidon.mp.demo.hr.ext.validation.DeprtmentNotFoundBusinessException;
+import com.jobinesh.helidon.mp.demo.hr.ext.validation.ValidDepartment;
 
 import javax.enterprise.context.RequestScoped;
 import javax.json.Json;
@@ -113,7 +114,7 @@ public class DepartmentResource {
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createDepartment(Department entity) {
+    public void createDepartment(@ValidDepartment Department entity) {
         EntityManager em = PersistenceManager.INSTANCE.getEntityManager();
         em.getTransaction().begin();
         em.persist(entity);

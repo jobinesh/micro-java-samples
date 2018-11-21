@@ -22,6 +22,10 @@ import com.jobinesh.helidon.mp.demo.hr.services.DepartmentResource;
 import com.jobinesh.helidon.mp.demo.hr.ext.validation.DepartmentNotFoundExceptionMapper;
 import com.jobinesh.helidon.mp.demo.hr.ext.interceptor.CSVMessageBodyReader;
 import com.jobinesh.helidon.mp.demo.hr.ext.interceptor.CSVMessageBodyWriter;
+import com.jobinesh.helidon.mp.demo.hr.ext.validation.ValidDepartment;
+import com.jobinesh.helidon.mp.demo.hr.ext.validation.ValidDepartmentValidator;
+import com.jobinesh.helidon.mp.demo.hr.services.DepartmentAsynchResource;
+import com.jobinesh.helidon.mp.demo.hr.services.DepartmentCachedResource;
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -41,11 +45,15 @@ public class HRServiceApplication extends Application {
     public Set<Class<?>> getClasses() {
         return CollectionsHelper.setOf(
                 DepartmentResource.class,
+                DepartmentAsynchResource.class,
+                DepartmentCachedResource.class,
                 ContainerResponseCORSFilter.class,
                 DynamicFeatureRegister.class,
                 CSVMessageBodyReader.class,
                 CSVMessageBodyWriter.class,
-                DepartmentNotFoundExceptionMapper.class
+                DepartmentNotFoundExceptionMapper.class,
+                ValidDepartment.class,
+                ValidDepartmentValidator.class
         );
     }
 }

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.jobinesh.helidon.mp.demo.hr.main;
 
 import java.io.IOException;
@@ -29,10 +28,12 @@ public final class BootStrapper {
     /**
      * Cannot be instantiated.
      */
-    private BootStrapper() { }
+    private BootStrapper() {
+    }
 
     /**
      * Application main entry point.
+     *
      * @param args command line arguments
      * @throws IOException if there are problems reading logging properties
      */
@@ -40,15 +41,19 @@ public final class BootStrapper {
         setupLogging();
 
         Server server = startServer();
-
+        System.out.println("Following REST API end points are in action:");
         System.out.println("http://localhost:" + server.getPort() + "/departments");
+        System.out.println("http://localhost:" + server.getPort() + "/asynch/departments");
+        System.out.println("http://localhost:" + server.getPort() + "/cached/departments");
+
     }
 
     /**
      * Start the server.
+     *
      * @return the created {@link Server} instance
      */
-     static Server startServer() {
+    static Server startServer() {
         // Server will automatically pick up configuration from
         // microprofile-config.properties
         // and Application classes annotated as @ApplicationScoped

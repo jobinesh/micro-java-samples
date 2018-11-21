@@ -29,7 +29,7 @@ public class ValidDepartmentValidator implements ConstraintValidator<ValidDepart
     @Override
     public boolean isValid(Department department, ConstraintValidatorContext context) {
         logger.log(Level.INFO, "isValid: " + department.toString());
-        if (isDeptExistsForLoc(department.getDepartmentId(),
+        if (isValidLoc(department.getDepartmentId(),
                 department.getDepartmentName(), department.getLocationId())) {
             return true;
         }
@@ -37,8 +37,13 @@ public class ValidDepartmentValidator implements ConstraintValidator<ValidDepart
         return false;
     }
 
-    private boolean isDeptExistsForLoc(Short deptId, String deptName, Short locationId) {
-        return false;
+    private boolean isValidLoc(Short deptId, String deptName, Short locationId) {
+        //This example assumes -ve values are not valid location ids
+        if (locationId <= 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

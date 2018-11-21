@@ -43,13 +43,13 @@ import javax.ws.rs.core.Response.ResponseBuilder;
  * @author Jobinesh
  */
 @Stateless
-@Path("hr/cache")
+@Path("cache")
 public class DepartmentCachedResource {
 
     private static final Logger logger = Logger.getLogger(DepartmentCachedResource.class.getName());
 
     @GET
-    @Path("etag/departments/{id}")
+    @Path("departments/etag/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findDepartmentWithCacheValidationWithEtag(@PathParam("id") Short id, @Context Request request) {
         EntityManager entityManager = PersistenceManager.INSTANCE.getEntityManager();
@@ -99,7 +99,7 @@ public class DepartmentCachedResource {
     }
 
     @PUT
-    @Path("etag/departments/{id}")
+    @Path("departments/etag/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response edit(@PathParam("id") Short id, @Context Request request, Department entity) {
 
