@@ -1,5 +1,5 @@
 
-# Helidon Example: hr-service-mp
+# Helidon MicroProfile Example: hr-service-mp
 
 This simple example exercises many of the commonly used JAX-RS APIs in a Helidon MP microservice. You can read more about this exmple here: https://link.medium.com/uXATLoOb2R   
 
