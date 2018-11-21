@@ -1,7 +1,7 @@
 
 # Helidon Example: hr-service-mp
 
-This example implements a simple Hello World REST service using MicroProfile. You can read more about this exmple here: https://link.medium.com/uXATLoOb2R   
+This simple example exercises many of the commonly used JAX-RS APIs in a Helidon MP microservice. You can read more about this exmple here: https://link.medium.com/uXATLoOb2R   
 
 ## Prerequisites
 
