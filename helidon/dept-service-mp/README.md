@@ -11,6 +11,7 @@ This example implements a simple Hello World REST service using MicroProfile
 4. Kubernetes minikube v0.24 or newer (if you want to deploy to Kubernetes)
    or access to a Kubernetes 1.7.4 or newer cluster
 5. Kubectl 1.7.4 or newer for deploying to Kubernetes
+6. Set up SQLite DB and add Departments table as exaplined int his post https://medium.com/@jobinesh/building-a-simple-microservice-using-helidon-microprofile-apis-and-jpa-ac97bb2e45ab
 
 Verify prerequisites
 ```
