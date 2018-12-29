@@ -39,6 +39,9 @@ java -jar target/hr-service-mp.jar
 curl -X GET http://localhost:8080/departments
 
 ```
+Refer to the following write-up to learn various features that you can try out : https://medium.com/@jobinesh/a-helidon-microprofile-sample-illustrating-all-commonly-used-jax-rs-apis-cf180e76b3cd   
+  
+Also, you can try the java rest client that you can find in the following project : https://github.com/jobinesh/micro-java-samples/tree/master/helidon/hr-service-mp-client
 
 ## Build the Docker Image
 
