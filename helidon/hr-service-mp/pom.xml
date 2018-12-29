@@ -200,7 +200,7 @@
             <version>2.4.0</version>
         </dependency>
         <!-- End : Added for CSV Payload-->
-       
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -221,13 +221,6 @@
             <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
             <version>2.7.3</version>
         </dependency>
-        <dependency>
-            <groupId>io.helidon.integrations.cdi</groupId>
-            <artifactId>helidon-integrations-cdi-datasource-hikaricp</artifactId>
-            <version>0.10.5</version>
-            <!-- <version>${project.version}</version> --> 
-        </dependency>
-    
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
@@ -266,5 +259,17 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.helidon.integrations.cdi</groupId>
+            <artifactId>helidon-integrations-cdi-datasource-hikaricp</artifactId>
+            <!-- See https://search.maven.org/classic/#search%7Cga%7C1%7Cg%3A%22io.helidon.integrations.cdi%22%20AND%20a%3A%22helidon-integrations-cdi-datasource-hikaricp%22 for available versions. -->
+            <version>0.10.5</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>2.7.9</version>
+        </dependency>  
     </dependencies>
 </project>

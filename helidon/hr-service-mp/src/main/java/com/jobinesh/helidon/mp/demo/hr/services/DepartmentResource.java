@@ -45,7 +45,6 @@ import javax.ws.rs.core.MediaType;
 @RequestScoped
 public class DepartmentResource {
 
-    private final DataSource dataSource = null;
     private static final Logger logger = Logger.getLogger(DepartmentResource.class.getName());
 
     @GET

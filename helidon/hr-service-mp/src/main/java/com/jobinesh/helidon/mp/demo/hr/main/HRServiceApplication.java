@@ -41,6 +41,10 @@ import io.helidon.common.CollectionsHelper;
 @ApplicationPath("/")
 public class HRServiceApplication extends Application {
 
+    public HRServiceApplication() {
+
+    }
+
     @Override
     public Set<Class<?>> getClasses() {
         return CollectionsHelper.setOf(
@@ -48,6 +52,7 @@ public class HRServiceApplication extends Application {
                 DepartmentAsynchResource.class,
                 DepartmentCachedResource.class,
                 ContainerResponseCORSFilter.class,
+                ContainerRequestLoggerFilter.class,
                 DynamicFeatureRegister.class,
                 CSVMessageBodyReader.class,
                 CSVMessageBodyWriter.class,
